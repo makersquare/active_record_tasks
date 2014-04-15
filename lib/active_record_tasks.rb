@@ -1,5 +1,21 @@
-require "active_record_tasks/version"
+require 'yaml'
+require 'erb'
 
 module ActiveRecordTasks
-  # Your code goes here...
+  DatabaseConfig = Struct.new(:db_dir, :db_config_path, :env)
+  @config = DatabaseConfig.new
+
+  def self.configure
+    yield @config
+  end
+
+  def self.config
+    @config
+  end
+
+  def self.load_tasks
+    require 'active_record_tasks/tasks'
+  end
 end
+
+require 'active_record_tasks/version'
