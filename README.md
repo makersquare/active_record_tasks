@@ -6,7 +6,7 @@ The easiest way to get started with ActiveRecord 4 in a non-rails project.
 
 Add this line to your application's Gemfile:
 
-    gem 'active_record_tasks', '~> 1.0.0'
+    gem 'active_record_tasks', '~> 1.0.1'
 
 And then execute:
 
