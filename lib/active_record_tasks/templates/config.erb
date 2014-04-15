@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  database: <%= project_dir %>_dev
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: <%= project_dir %>_test
+  pool: 5
+  timeout: 5000

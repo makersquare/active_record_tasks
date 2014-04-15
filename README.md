@@ -16,7 +16,7 @@ Or install it yourself as:
 
     $ gem install active_record_tasks
 
-## Usage
+## Getting Started
 
 Include the following in your `Rakefile`:
 
@@ -34,7 +34,17 @@ end
 ActiveRecordTasks.load_tasks
 ```
 
-Now you have access to all the ActiveRecord db tasks!
+If this is a new project:
+
+```
+$ rake generate:init
+```
+
+will generate your configured db directory (if it doesn't exist).
+
+## Usage
+
+ActiveRecordTasks gives you access to all the ActiveRecord db tasks:
 
 ```
 $ rake -T
@@ -55,7 +65,7 @@ rake db:version             # Retrieves the current schema version number
 ...
 ```
 
-## Basic Generate Migration
+### Generating Migrations
 
 This gem provides a bonus `generate:migration` task. It's very basic, but it works:
 

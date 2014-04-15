@@ -30,6 +30,50 @@ end
 
 # Simple migration generator
 namespace :generate do
+  require 'rainbow/ext/string'
+  def puts_exists(subject)
+    print "\texists\t".color(:cyan)
+    puts subject
+  end
+  def puts_create(subject)
+    print "\tcreate\t".color(:green)
+    puts subject
+  end
+
+  desc "Generates a new db directory"
+  task :init do
+    # Create (configured) db and db/migrate directory
+    if File.directory?(config.db_dir)
+      puts_exists config.db_dir
+    else
+      puts_create config.db_dir
+      Dir.mkdir(config.db_dir)
+    end
+
+    migrate_dir = "#{config.db_dir}/migrate"
+    if File.directory?(migrate_dir)
+      puts_exists migrate_dir
+    else
+      puts_create migrate_dir
+      Dir.mkdir(migrate_dir)
+    end
+
+    # Create basic config.yml file
+    db_config_path = config.db_config_path
+    if File.exist?(db_config_path)
+      puts_exists db_config_path
+    else
+      puts_create db_config_path
+      project_dir = File.basename(Dir.pwd)
+      template = File.read File.join(File.dirname(__FILE__), 'templates/config.erb')
+      result = ERB.new(template).result(binding)
+
+      File.write(db_config_path, result)
+    end
+
+  end
+
+
   desc "Creates a new migration file with the specified name"
   task :migration => :environment do |t, args|
     name = args[:name] || ENV['name']
@@ -57,7 +101,7 @@ namespace :generate do
     timestamp = Time.now.strftime("%Y%m%d%H%M%S")
     migration_path = File.join(migrate_dir, "#{timestamp}_#{name.underscore}.rb")
     File.write(migration_path, result)
-    puts "      create    #{migration_path}"
+    puts_create migration_path
   end
 end
 
