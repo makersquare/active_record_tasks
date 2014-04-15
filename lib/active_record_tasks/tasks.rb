@@ -48,8 +48,14 @@ namespace :generate do
     template = File.read File.join(File.dirname(__FILE__), 'templates/migrate.erb')
     result = ERB.new(template).result(binding)
 
+    # Ensure migrate directory exists
+    migrate_dir = "#{config.db_dir}/migrate"
+    unless File.directory?(migrate_dir)
+      Dir.mkdir(migrate_dir)
+    end
+
     timestamp = Time.now.strftime("%Y%m%d%H%M%S")
-    migration_path = File.join("#{config.db_dir}/migrate/#{timestamp}_#{name.underscore}.rb")
+    migration_path = File.join(migrate_dir, "#{timestamp}_#{name.underscore}.rb")
     File.write(migration_path, result)
     puts "      create    #{migration_path}"
   end
