@@ -2,7 +2,7 @@ require 'yaml'
 require 'erb'
 
 module ActiveRecordTasks
-  DatabaseConfig = Struct.new(:db_dir, :db_config_path, :env)
+  DatabaseConfig = Struct.new(:db_dir, :db_config_path, :env, :root, :seed_loader)
   @config = DatabaseConfig.new
 
   def self.configure

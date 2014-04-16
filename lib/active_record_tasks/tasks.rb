@@ -21,6 +21,8 @@ Rake::Task["db:load_config"].overwrite do
   ActiveRecord::Base.configurations = ActiveRecord::Tasks::DatabaseTasks.database_configuration = YAML.load File.read(config.db_config_path)
   ActiveRecord::Tasks::DatabaseTasks.db_dir = config.db_dir
   ActiveRecord::Tasks::DatabaseTasks.env = config.env
+  ActiveRecord::Tasks::DatabaseTasks.root = config.root || File.join(config.db_dir, '..')
+  ActiveRecord::Tasks::DatabaseTasks.seed_loader = config.seed_loader
 end
 
 # Migrations need an environment with an already established database connection
