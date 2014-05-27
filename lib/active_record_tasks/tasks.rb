@@ -18,7 +18,10 @@ load File.join(spec.gem_dir, "lib/active_record/railties/databases.rake")
 
 # Overwrite the load config to your needs
 Rake::Task["db:load_config"].overwrite do
-  ActiveRecord::Base.configurations = ActiveRecord::Tasks::DatabaseTasks.database_configuration = YAML.load File.read(config.db_config_path)
+  require 'erb'
+  # yaml = YAML.load(ERB.new(IO.read(@config[:db_yml])))
+  db_config = YAML.load ERB.new(File.read config.db_config_path).result
+  ActiveRecord::Base.configurations = ActiveRecord::Tasks::DatabaseTasks.database_configuration = db_config
   ActiveRecord::Tasks::DatabaseTasks.db_dir = config.db_dir
   ActiveRecord::Tasks::DatabaseTasks.env = config.env
   ActiveRecord::Tasks::DatabaseTasks.root = config.root || File.join(config.db_dir, '..')
