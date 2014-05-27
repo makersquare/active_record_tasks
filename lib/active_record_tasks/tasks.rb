@@ -2,7 +2,7 @@
 config = ActiveRecordTasks.config
 config.db_dir ||= 'db'
 config.db_config_path ||= File.join(config.db_dir, 'config.yml')
-config.env ||= 'test'
+config.env ||= 'development'
 
 # This is needed to overwrite the already-existing Rake task "load_config"
 class Rake::Task
